@@ -47,6 +47,15 @@ const disconnect = () =>{
 
 function generateNotes(noteArr){
     let noteListDiv = document.getElementById('note-list');
+    
+    noteListDiv.innerHTML = "";
+
+    const addDiv = document.createElement('div');
+    addDiv.classList.add('note');
+    addDiv.id = 'plus';
+    addDiv.addEventListener('click', addNote);
+
+    noteListDiv.append(addDiv);
 
     noteArr.forEach(x => {
         const noteDiv = document.createElement('div');
@@ -93,7 +102,29 @@ function displayNotes(){
 }
 
 function addNote(){
-    
+    xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "create_note.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText)
+                const response = JSON.parse(xhr.responseText);
+                console.log(response.message);
+
+                if(response.message.includes('succès')){
+                    displayNotes();
+                }else{
+                    window.alert("La note n'a pas pu être ajoutée")
+                }
+
+            } else {
+                console.error('Request failed:', xhr.status);            
+            }
+        }
+    };
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
 }
 
 
