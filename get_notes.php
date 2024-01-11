@@ -16,7 +16,7 @@ if (isset($_SESSION['username'])) {
     // User is logged in
     $loggedInUser = $_SESSION['username'];
 
-    $q = 'SELECT title, content FROM notes WHERE id_user = (SELECT id_user FROM users WHERE username = ?)';
+    $q = 'SELECT id_note, title, content FROM notes WHERE id_user = (SELECT id_user FROM users WHERE username = ?) ORDER BY id_note DESC';
     $stmt = $conn->prepare($q);
     $stmt->bind_param('s', $loggedInUser);
     $stmt->execute();

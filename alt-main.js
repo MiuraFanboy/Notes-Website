@@ -60,6 +60,9 @@ function generateNotes(noteArr){
     noteArr.forEach(x => {
         const noteDiv = document.createElement('div');
         noteDiv.classList.add('note');
+        noteDiv.addEventListener('click', function(){
+            modifyNote(x.id_note);
+        });
 
         const noteTitle = document.createElement('h2');
         noteTitle.classList.add('note-title');
@@ -110,10 +113,10 @@ function addNote(){
             if (xhr.status === 200) {
                 console.log(xhr.responseText)
                 const response = JSON.parse(xhr.responseText);
-                console.log(response.message);
+                // console.log(response);
 
                 if(response.message.includes('succès')){
-                    displayNotes();
+                    modifyNote(response.noteId);
                 }else{
                     window.alert("La note n'a pas pu être ajoutée")
                 }
@@ -127,6 +130,10 @@ function addNote(){
     xhr.send();
 }
 
+function modifyNote(noteId){
+    window.location.href = 'modify_note.html?noteId=' + encodeURIComponent(noteId);
+}
+
+
 
 displayNotes();
-

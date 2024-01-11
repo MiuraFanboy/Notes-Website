@@ -32,7 +32,11 @@ if (isset($_SESSION['username'])) {
         $stmt->bind_param('i', $userId); // Assuming id_user is an integer; use 'i' for integer type
         $stmt->execute();
 
-        echo json_encode(array("message"=>"Note créée avec succès!"));
+        // Fetch the id_note of the newly inserted record
+        $noteId = $conn->insert_id;
+        
+        echo json_encode(array("message"=>"Note créée avec succès!", "noteId" => $noteId));
+
     } else {
         echo json_encode(array("message"=>"User not found."));
     }
