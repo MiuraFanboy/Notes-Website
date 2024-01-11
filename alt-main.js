@@ -131,7 +131,7 @@ function addNote(){
 }
 
 function modifyNote(noteId){
-    window.location.href = 'modify_note.html?noteId=' + encodeURIComponent(noteId);
+    window.location.href = 'modify-note.html?noteId=' + encodeURIComponent(noteId);
 }
 
 
